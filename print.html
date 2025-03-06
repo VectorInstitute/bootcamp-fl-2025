@@ -158,7 +158,62 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="ide-and-environment-setup"><a class="header" href="#ide-and-environment-setup">IDE and Environment Setup</a></h1>
+                        <h1 id="bootcamp-repository-setup"><a class="header" href="#bootcamp-repository-setup">Bootcamp Repository Setup</a></h1>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="repo_setup_guide.html#admonition-note"></a>
+</div>
+<div>
+<p>These instructions assume you have already followed the basic Vector cluster account setup, including initial access,
+changing your password, and setting up multifactor authentication. These instructions have been sent to you by the
+Vector Ops Team. Multifactor authentication is now required upon all connections to the Vector cluster.</p>
+</div>
+</div>
+<h3 id="overview"><a class="header" href="#overview">Overview</a></h3>
+<p>In this section, you will create ssh keys on the Vector cluster in order to connect to the
+<a href="https://github.com/VectorInstitute/FL4Health">Fl4Health</a> GitHub repository. You will need to add these ssh keys to
+your GitHub profile in order to clone the repository and access code. A similar process may be followed on your
+local machine to establish keys to clone the repository locally.</p>
+<h3 id="creating-your-ssh-keys"><a class="header" href="#creating-your-ssh-keys">Creating Your SSH Keys</a></h3>
+<p>First, login to Vaughan (Vector cluster) over ssh using your login credentials (replace username with your own Vector
+username). If you are using Windows, use Windows PowerShell to run local commands, including the following one.
+Otherwise, use Terminal.</p>
+<pre><code class="language-bash">ssh username@v.vectorinstitute.ai
+</code></pre>
+<p>Once logged into the Vaughan cluster, create ssh keys
+(<strong>replace your_email@example.com with your GitHub account email address</strong>). For additional reference, see
+information
+<a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">here</a>.</p>
+<pre><code class="language-bash">ssh-keygen -t ed25519 -C "your_email@example.com"
+</code></pre>
+<p>When prompted to choose a file in which to save the key, just press Enter for the default. Additionally, when asked
+to enter a passphrase, press Enter to proceed without setting a passphrase. It is alright not to set one.</p>
+<p>Using the command below show your public key in the terminal and copy it to the clipboard (replace username with your
+own Vector cluster username)</p>
+<pre><code class="language-bash">cat /h/$USER/.ssh/id_ed25519.pub
+</code></pre>
+<p>Add this ssh key to your GitHub profile by following the steps on this page:
+<a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">Add New SSH Key</a></p>
+<h3 id="cloning-the-repository"><a class="header" href="#cloning-the-repository">Cloning the Repository</a></h3>
+<p>Return to your terminal session and clone the fl4health repository into your home directory.</p>
+<pre><code class="language-bash">cd ~/
+git clone git@github.com:/VectorInstitute/fl4health.git
+</code></pre>
+<p>There should be a new folder in your home directory called FL4Health.</p>
+<p>Once you have successfully cloned the fl4health repository, please proceed to setting up your VS Code and Python
+Environment. These steps are outlined <a href="./ide_and_environment_guide.html">ide_and_environment_guide.md</a></p>
+<div class="vector-logo">
+    <a href="https://vectorinstitute.ai/">
+        <img src="https://d3ddy8balm3goa.cloudfront.net/vector-ai-pocket-refs/vector-logo-default.png" alt="" class="light-logo">
+    </a>
+    <a href="https://vectorinstitute.ai/">
+        <img src="https://d3ddy8balm3goa.cloudfront.net/vector-ai-pocket-refs/vector-logo-dark.png" alt="" class="dark-logo">
+    </a>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ide-and-environment-setup"><a class="header" href="#ide-and-environment-setup">IDE and Environment Setup</a></h1>
 <h3 id="installing-vs-code-locally-and-cloning-the-repository"><a class="header" href="#installing-vs-code-locally-and-cloning-the-repository">Installing VS Code Locally and Cloning the Repository</a></h3>
 <p>For this bootcamp, we highly recommend using VS Code as your local IDE because it makes working on the cluster GPUs
 significantly easier. You can download VS Code here: https://code.visualstudio.com/</p>
@@ -421,61 +476,6 @@ could be covered in the lectures given.</p>
 <li><code>examples/fedsimclr_example</code></li>
 <li><code>examples/flash_example</code></li>
 </ul>
-<div class="vector-logo">
-    <a href="https://vectorinstitute.ai/">
-        <img src="https://d3ddy8balm3goa.cloudfront.net/vector-ai-pocket-refs/vector-logo-default.png" alt="" class="light-logo">
-    </a>
-    <a href="https://vectorinstitute.ai/">
-        <img src="https://d3ddy8balm3goa.cloudfront.net/vector-ai-pocket-refs/vector-logo-dark.png" alt="" class="dark-logo">
-    </a>
-</div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="bootcamp-repository-setup"><a class="header" href="#bootcamp-repository-setup">Bootcamp Repository Setup</a></h1>
-<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
-<div class="admonition-title">
-<div id="admonition-note-title">
-<p>Note</p>
-</div>
-<a class="admonition-anchor-link" href="repo_setup_guide.html#admonition-note"></a>
-</div>
-<div>
-<p>These instructions assume you have already followed the basic Vector cluster account setup, including initial access,
-changing your password, and setting up multifactor authentication. These instructions have been sent to you by the
-Vector Ops Team. Multifactor authentication is now required upon all connections to the Vector cluster.</p>
-</div>
-</div>
-<h3 id="overview"><a class="header" href="#overview">Overview</a></h3>
-<p>In this section, you will create ssh keys on the Vector cluster in order to connect to the
-<a href="https://github.com/VectorInstitute/FL4Health">Fl4Health</a> GitHub repository. You will need to add these ssh keys to
-your GitHub profile in order to clone the repository and access code. A similar process may be followed on your
-local machine to establish keys to clone the repository locally.</p>
-<h3 id="creating-your-ssh-keys"><a class="header" href="#creating-your-ssh-keys">Creating Your SSH Keys</a></h3>
-<p>First, login to Vaughan (Vector cluster) over ssh using your login credentials (replace username with your own Vector
-username). If you are using Windows, use Windows PowerShell to run local commands, including the following one.
-Otherwise, use Terminal.</p>
-<pre><code class="language-bash">ssh username@v.vectorinstitute.ai
-</code></pre>
-<p>Once logged into the Vaughan cluster, create ssh keys
-(<strong>replace your_email@example.com with your GitHub account email address</strong>). For additional reference, see
-information
-<a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">here</a>.</p>
-<pre><code class="language-bash">ssh-keygen -t ed25519 -C "your_email@example.com"
-</code></pre>
-<p>When prompted to choose a file in which to save the key, just press Enter for the default. Additionally, when asked
-to enter a passphrase, press Enter to proceed without setting a passphrase. It is alright not to set one.</p>
-<p>Using the command below show your public key in the terminal and copy it to the clipboard (replace username with your
-own Vector cluster username)</p>
-<pre><code class="language-bash">cat /h/$USER/.ssh/id_ed25519.pub
-</code></pre>
-<p>Add this ssh key to your GitHub profile by following the steps on this page:
-<a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">Add New SSH Key</a></p>
-<h3 id="cloning-the-repository"><a class="header" href="#cloning-the-repository">Cloning the Repository</a></h3>
-<p>Return to your terminal session and clone the fl4health repository into your home directory.</p>
-<pre><code class="language-bash">cd ~/
-git clone git@github.com:/VectorInstitute/fl4health.git
-</code></pre>
-<p>There should be a new folder in your home directory called FL4Health.</p>
-<p>Once you have successfully cloned the fl4health repository, please proceed to setting up your VS Code and Python
-Environment. These steps are outlined <a href="./ide_and_environment_guide.html">ide_and_environment_guide.md</a></p>
 <div class="vector-logo">
     <a href="https://vectorinstitute.ai/">
         <img src="https://d3ddy8balm3goa.cloudfront.net/vector-ai-pocket-refs/vector-logo-default.png" alt="" class="light-logo">
