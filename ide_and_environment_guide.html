@@ -171,11 +171,12 @@ but on your local machine.</p>
 environment locally in order to use the library. If you don’t already have it, there are multiple ways to obtain a
 copy and use it to create a python environment with the specific version. A few examples are:</p>
 <ol>
-<li>Using <code>pyenv</code> following the readme here: <a href="https://github.com/pyenv/pyenv/blob/master/README.md">link</a></li>
-<li>Using <code>conda</code> following the installation instructions
+<li>Using <code>miniconda</code> following the installation instructions
 (<a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html">link</a>) and the environment create
 instructions here</li>
 <li>Homebrew via this <a href="https://formulae.brew.sh/formula/python@3.10">link</a>.</li>
+<li>Using <code>pyenv</code> following the readme here: <a href="https://github.com/pyenv/pyenv/blob/master/README.md">link</a>. Note that
+<code>pyenv</code> can be somewhat involved to use.</li>
 </ol>
 <p>Thereafter, you run the commands (or variations if your system python is not 3.10 or you’re using an environment
 manager like <code>conda</code>).</p>
@@ -185,21 +186,36 @@ source ENV_PATH/env_name/bin/activate
 pip install --upgrade pip poetry
 poetry install --with "dev, dev-local, test, codestyle"
 </code></pre>
+<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div class="admonition-title">
+<div id="admonition-note-title">
+<p>Note</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-note"></a>
+</div>
+<div>
 <p>The environment creation step may be different depending on how 3.10 is installed on your system or whether you’re
 using, for example, the conda steps to create the environment.</p>
 <p>For example, if python 3.10 is not designated as your local systems python, you may need to adjust the path in the
 command</p>
 <pre><code class="language-bash">python -m venv ENV_PATH/env_name
-</code></pre>
-<p>to the right python path as, for example</p>
-<pre><code class="language-bash">path/to/python -m venv ENV_PATH/env_name
+
+&lt;/div&gt;
+&lt;/div&gt;
+to the right python path as, for example
+```bash
+path/to/python -m venv ENV_PATH/env_name
 </code></pre>
 <p>Here <code>ENV_PATH/env_name</code> is whatever you want to call the environment to be created. Mine is simply
 called <code>fl4health</code>.</p>
 <p>If you're using <code>conda</code> then you can specify a python version to use as</p>
 <pre><code class="language-bash">conda create -n env_name python=3.10
 </code></pre>
-<p>where <code>env_name</code> is what you would like to call your environment.</p>
+<p>where <code>env_name</code> is what you would like to call your environment. Thereafter, you would activate your environment
+using</p>
+<pre><code class="language-bash">conda activate env_name
+</code></pre>
+<p>and proceed with the remainder of the instructions unaltered.</p>
 <p><strong>Note that the above code must be run from the top level of the FL4Health directory.</strong></p>
 <p><strong>Any time you want to run code in the library, this environment must be active.</strong></p>
 <p>The command to activate the environment is</p>
@@ -260,7 +276,7 @@ rm vscode_cli.tar.gz
 </code></pre>
 <h4 id="setting-up-a-tunnel-and-connecting-your-local-vs-code"><a class="header" href="#setting-up-a-tunnel-and-connecting-your-local-vs-code">Setting up a Tunnel and Connecting Your Local VS Code</a></h4>
 <p>After logging into the cluster, run the following.</p>
-<pre><code class="language-bash">srun --gres=gpu:1 --qos=m -c 8 --mem 16G -p t4v2 --pty bash
+<pre><code class="language-bash">srun --gres=gpu:1 --qos=m --time=4:00:00 -c 8 --mem 16G -p t4v2 --pty bash
 </code></pre>
 <p>This will reserve a t4v2 GPU and provide you a terminal to run commands on that node. Note that <code>-p t4v2</code> requests
 a t4v2 GPU. You can also access larger <code>a40</code> and <code>rtx6000</code> GPUs this way, but you may face longer wait times for
@@ -285,19 +301,20 @@ name you gave it, or the default of the first GPU you connected to), you should 
 Code is logged into the GPU and should be able to see the file system there.</p>
 <p>Note that you will need to keep the SSH connection running in your terminal while using the tunnel. After you are done
 with the work, stop your session by pressing Control-C to release the GPU.</p>
-<div id="admonition-note" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-title">
+<div id="admonition-note-1" class="admonition admonish-note" role="note" aria-labelledby="admonition-note-1-title">
 <div class="admonition-title">
-<div id="admonition-note-title">
+<div id="admonition-note-1-title">
 <p>Note</p>
 </div>
-<a class="admonition-anchor-link" href="#admonition-note"></a>
+<a class="admonition-anchor-link" href="#admonition-note-1"></a>
 </div>
 <div>
-<p>GPU reservations are time limited. The command <code>--qos=m</code> guarantees that you get the GPU for 1-hour
+<p>GPU reservations are time limited. The command <code>--qos=m --time=4:00:00</code> guarantees that you get the GPU for 4 hours
 uninterrupted. Thereafter, you may be preempted (kicked off), by other users hoping to use the resources.</p>
 </div>
 </div>
-<p>If you want to request more time, you can add <code>--time=4:00:00</code> to request, for example, 4 hours of reservation.</p>
+<p>If you want to request more time, you can increase <code>--time=X:00:00</code> to request a longer time reservation. As the
+reservation time increases, so does the potential wait time to obtain the requested resources.</p>
 <h3 id="running-an-example-locally-or-on-the-cluster"><a class="header" href="#running-an-example-locally-or-on-the-cluster">Running an Example (Locally or On the Cluster)</a></h3>
 <p>For your convenience, we have a basic utility script that takes care of launching server and client code in
 background processes, so you don’t need to worry about opening multiple terminal windows to run each client and server
