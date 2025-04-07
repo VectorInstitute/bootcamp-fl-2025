@@ -33,10 +33,11 @@
         <link rel="stylesheet" href="./mdbook-ai-pocket-reference.css">
 
 
-        <!-- Provide site root to javascript -->
+        <!-- Provide site root and default themes to javascript -->
         <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -46,8 +47,8 @@
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -61,7 +62,8 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -74,8 +76,8 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -111,6 +113,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
@@ -173,19 +176,19 @@ Vector Ops Team. Multifactor authentication is now required upon all connections
 </div>
 <h3 id="overview"><a class="header" href="#overview">Overview</a></h3>
 <p>In this section, you will create ssh keys on the Vector cluster in order to connect to the
-<a href="https://github.com/VectorInstitute/FL4Health">Fl4Health</a> GitHub repository. You will need to add these ssh keys to
+<a href="https://github.com/VectorInstitute/FL4Health" target="_blank" rel="noopener noreferrer">Fl4Health</a> GitHub repository. You will need to add these ssh keys to
 your GitHub profile in order to clone the repository and access code. A similar process may be followed on your
 local machine to establish keys to clone the repository locally.</p>
 <h3 id="creating-your-ssh-keys"><a class="header" href="#creating-your-ssh-keys">Creating Your SSH Keys</a></h3>
 <p>First, login to Vaughan (Vector cluster) over ssh using your login credentials (replace username with your own Vector
 username). If you are using Windows, use Windows PowerShell to run local commands, including the following one. An
-alternative for Windows is to use <a href="https://gitforwindows.org/">git-bash</a>. Otherwise, use Terminal.</p>
+alternative for Windows is to use <a href="https://gitforwindows.org/" target="_blank" rel="noopener noreferrer">git-bash</a>. Otherwise, use Terminal.</p>
 <pre><code class="language-bash">ssh username@v.vectorinstitute.ai
 </code></pre>
 <p>Once logged into the Vaughan cluster, create ssh keys
 (<strong>replace your_email@example.com with your GitHub account email address</strong>). For additional reference, see
 information
-<a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">here</a>.</p>
+<a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent" target="_blank" rel="noopener noreferrer">here</a>.</p>
 <pre><code class="language-bash">ssh-keygen -t ed25519 -C "your_email@example.com"
 </code></pre>
 <p>When prompted to choose a file in which to save the key, just press Enter for the default. Additionally, when asked
@@ -195,7 +198,7 @@ own Vector cluster username)</p>
 <pre><code class="language-bash">cat /h/$USER/.ssh/id_ed25519.pub
 </code></pre>
 <p>Add this ssh key to your GitHub profile by following the steps on this page:
-<a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">Add New SSH Key</a></p>
+<a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account" target="_blank" rel="noopener noreferrer">Add New SSH Key</a></p>
 <h3 id="cloning-the-repository"><a class="header" href="#cloning-the-repository">Cloning the Repository</a></h3>
 <p>Return to your terminal session and clone the fl4health repository into your home directory.</p>
 <pre><code class="language-bash">cd ~/
